@@ -40,16 +40,17 @@ class ExerciseActivity : AppCompatActivity() {
         if (restTimer !=  null) {
             restTimer!!.cancel()
             restProgress = 0
+            exerciseProgress = 0
         }
         super.onDestroy()
     }
 
     private fun setRestProgressBar() {
         progressBar.progress = restProgress
-        restTimer = object : CountDownTimer(10000, 1000) {
+        restTimer = object : CountDownTimer(3000, 1000) {
             override fun onTick(p0: Long) {
                 restProgress++
-                val progress = 10 - restProgress
+                val progress = 3 - restProgress
                 progressBar.progress = progress
                 tvTimer.text = progress.toString()
             }
@@ -63,21 +64,29 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun setExerciseProgressBar() {
         progressBarExercise.progress = exerciseProgress
-        restTimer = object : CountDownTimer(30000, 1000) {
+        exerciseTimer = object : CountDownTimer(5000, 1000) {
             override fun onTick(p0: Long) {
                 exerciseProgress++
-                val progress = 30 - exerciseProgress
+                val progress = 5 - exerciseProgress
                 progressBarExercise.progress = progress
                 tvExerciseTimer.text = progress.toString()
             }
 
             override fun onFinish() {
-                Toast.makeText(this@ExerciseActivity, "Here now we will start the exercise.", Toast.LENGTH_SHORT).show()
+                if (currentExercisePosition < exerciseList?.size!! - 1) {
+                    setupRestView()
+                } else {
+                    Toast.makeText(this@ExerciseActivity, "Congratulations! You have completed the 7 minutes workout.", Toast.LENGTH_SHORT).show()
+                }
             }
         }.start()
     }
 
     private fun setupRestView() {
+
+        llRestView.visibility = View.VISIBLE
+        llExerciseView.visibility = View.GONE
+
         if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
@@ -95,5 +104,8 @@ class ExerciseActivity : AppCompatActivity() {
             exerciseProgress = 0
         }
         setExerciseProgressBar()
+
+        ivImage.setImageResource(exerciseList!![currentExercisePosition].getImage())
+        tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
     }
 }
