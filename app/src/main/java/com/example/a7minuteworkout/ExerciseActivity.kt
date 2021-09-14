@@ -30,9 +30,9 @@ class ExerciseActivity : AppCompatActivity() {
         toolbar_exercise_activity.setNavigationOnClickListener {
             onBackPressed()
         }
-        setupRestView()
 
         exerciseList = Constants.defaultExerciseList()
+        setupRestView()
 
     }
 
@@ -91,7 +91,10 @@ class ExerciseActivity : AppCompatActivity() {
             restTimer!!.cancel()
             restProgress = 0
         }
+
+        tvUpcomingExerciseName.text = exerciseList!![currentExercisePosition + 1].getName()
         setRestProgressBar()
+
     }
 
     private fun setupExerciseView() {
