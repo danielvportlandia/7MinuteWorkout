@@ -15,6 +15,9 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
 
+    private var exerciseList: ArrayList<ExerciseModel>? = null
+    private var currentExercisePosition = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -28,6 +31,8 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
         setupRestView()
+
+        exerciseList = Constants.defaultExerciseList()
 
     }
 
@@ -50,6 +55,7 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                currentExercisePosition++
                 setupExerciseView()
             }
         }.start()
