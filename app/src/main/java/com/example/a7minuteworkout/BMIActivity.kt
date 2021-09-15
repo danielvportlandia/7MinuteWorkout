@@ -28,6 +28,7 @@ class BMIActivity : AppCompatActivity() {
         toolbar_bmi_activity.setNavigationOnClickListener {
             onBackPressed()
         }
+
         btnCalculateUnits.setOnClickListener {
             if (currentVisibleView.equals(METRIC_UNITS_VIEW)) {
                 if (validateMetricUnits()) {
